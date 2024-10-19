@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import tailwindstyles from "../index.css?inline";
+import supabase from "@/supabaseClient";
 
 function SimpleFeedbackWidget({ allowedRoutes = [], displayAfter = 0 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,10 +35,22 @@ function SimpleFeedbackWidget({ allowedRoutes = [], displayAfter = 0 }) {
     };
   }, [allowedRoutes, displayAfter]);
 
-  const handleSatisfactionClick = (value) => {
+  const handleSatisfactionClick = async (value) => {
     setSatisfaction(value);
-    // Here you can add logic to submit the feedback
-    console.log(`Satisfaction level: ${value}`);
+
+    let projectId = 1;
+    // Submit the feedback to Supabase
+    const { data, error } = await supabase.rpc("add_emoji_feedback_face", {
+      p_project_id: projectId,
+      p_face_rating: value,
+    });
+
+    if (error) {
+      console.error("Error submitting feedback:", error);
+    } else {
+      console.log("Feedback submitted successfully:", data);
+    }
+
     // Close the widget after selection
     setIsOpen(false);
   };
