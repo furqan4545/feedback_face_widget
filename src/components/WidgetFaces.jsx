@@ -87,7 +87,7 @@ function SimpleFeedbackWidget({
                 key={value}
                 variant="ghost"
                 size="lg"
-                className="w-[30%] h-12 text-3xl"
+                className="w-[30%] h-8 text-3xl"
                 onClick={() => handleSatisfactionClick(value)}
               >
                 {value === 1 ? "😞" : value === 2 ? "😐" : "😊"}
