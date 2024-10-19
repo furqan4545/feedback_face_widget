@@ -5,7 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import tailwindstyles from "../index.css?inline";
 import supabase from "@/supabaseClient";
 
-function SimpleFeedbackWidget({ allowedRoutes = [], displayAfter = 0 }) {
+function SimpleFeedbackWidget({
+  projectId,
+  allowedRoutes = [],
+  displayAfter = 0,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [satisfaction, setSatisfaction] = useState(null);
 
@@ -38,10 +42,9 @@ function SimpleFeedbackWidget({ allowedRoutes = [], displayAfter = 0 }) {
   const handleSatisfactionClick = async (value) => {
     setSatisfaction(value);
 
-    let projectId = 1;
     // Submit the feedback to Supabase
     const { data, error } = await supabase.rpc("add_emoji_feedback_face", {
-      p_project_id: projectId,
+      p_project_id: parseInt(projectId, 10),
       p_face_rating: value,
     });
 

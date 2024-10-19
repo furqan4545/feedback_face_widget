@@ -6,6 +6,7 @@ function App() {
     <>
       <div>
         <SimpleFeedbackWidget
+          projectId={2}
           allowedRoutes={["/", "/dashboard"]}
           displayAfter={2}
         />
